@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Sun } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import dynamic from "next/dynamic";
+import { Logo } from "@/components/Logo";
 
 const QuoteForm = dynamic(
   () => import("@/components/QuoteForm").then((mod) => mod.QuoteForm),
@@ -48,12 +49,7 @@ export default function OrcamentoPage() {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Voltar
           </Link>
-          <Link href="/" className="flex items-center gap-1.5 font-bold">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-emerald-500 to-cyan-600 text-white">
-              <Sun className="h-3.5 w-3.5" aria-hidden="true" />
-            </span>
-            Alvor Energia
-          </Link>
+          <Logo size="sm" />
         </div>
       </header>
 

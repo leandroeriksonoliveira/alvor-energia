@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useFormState } from "react-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 import {
   submitQuote,
   initialQuoteState,
@@ -70,6 +71,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
     setValue,
     watch,
     reset,
+    control,
     formState: { errors },
   } = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteFormSchema),
@@ -80,6 +82,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
       cityState: "",
       propertyType: undefined,
       averageBill: undefined,
+      lgpdConsent: undefined,
     },
   });
 
@@ -121,6 +124,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
       })
     );
     formData.append("billFile", billFile);
+    formData.append("lgpdConsent", "true");
 
     startTransition(() => {
       formAction(formData);
@@ -334,6 +338,43 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
             }}
             error={state.fileError || fileError || undefined}
           />
+        </div>
+
+        <div className="space-y-3 rounded-lg border bg-muted/30 p-4">
+          <Controller
+            name="lgpdConsent"
+            control={control}
+            render={({ field }) => (
+              <label className="flex cursor-pointer items-start gap-3 text-sm">
+                <input
+                  type="checkbox"
+                  checked={field.value === true}
+                  onChange={(e) => field.onChange(e.target.checked ? true : undefined)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-emerald-600"
+                  aria-invalid={!!errors.lgpdConsent || !!serverFieldError("lgpdConsent")}
+                />
+                <span className="leading-relaxed text-muted-foreground">
+                  Autorizo o tratamento dos meus dados pessoais pela{" "}
+                  <strong className="text-foreground">Alvor Soluções Energéticas</strong>{" "}
+                  para elaboração de proposta comercial, contato por telefone,
+                  WhatsApp ou e-mail, conforme a{" "}
+                  <Link
+                    href="/privacidade"
+                    target="_blank"
+                    className="font-medium text-emerald-600 underline-offset-2 hover:underline"
+                  >
+                    Política de Privacidade
+                  </Link>{" "}
+                  e a LGPD (Lei nº 13.709/2018). *
+                </span>
+              </label>
+            )}
+          />
+          {(errors.lgpdConsent || serverFieldError("lgpdConsent")) && (
+            <p className="text-sm text-destructive">
+              {errors.lgpdConsent?.message || serverFieldError("lgpdConsent")}
+            </p>
+          )}
         </div>
 
         <SubmitButton pending={isPending} />

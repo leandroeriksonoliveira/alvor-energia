@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 const navLinks = [
   { href: "#quem-somos", label: "Quem Somos" },
   { href: "#servicos", label: "Serviços" },
+  { href: "#projetos", label: "Projetos" },
   { href: "#diferenciais", label: "Diferenciais" },
   { href: "#contato", label: "Contato" },
 ];
@@ -13,17 +14,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-bold text-foreground transition-opacity hover:opacity-80"
-        >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-600 text-white">
-            <Sun className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <span className="text-lg">
-            Alvor <span className="text-emerald-600">Energia</span>
-          </span>
-        </Link>
+        <Logo size="md" />
 
         <nav className="hidden items-center gap-6 md:flex" aria-label="Principal">
           {navLinks.map((link) => (

@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { Instagram, Linkedin, Mail, MapPin, Phone, Sun } from "lucide-react";
+import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Logo } from "@/components/Logo";
+import { company } from "@/lib/company";
+import { veltro } from "@/lib/consent";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,39 +12,45 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <div className="flex items-center gap-2 font-bold text-foreground">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-600 text-white">
-                <Sun className="h-5 w-5" aria-hidden="true" />
-              </span>
-              Alvor Energia
-            </div>
+            <Logo size="md" />
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Energia solar e eficiência energética com excelência técnica.
-              Liderança de Luis Carlos de Oliveira.
+              {company.description}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Liderança: <strong className="text-foreground">{company.leader}</strong>
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-foreground">Contato</h3>
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
-                <a href="tel:+5500000000000" className="hover:text-foreground">
-                  (00) 0000-0000
-                </a>
-              </li>
+              {company.contact.phones.map((phone, i) => (
+                <li key={phone} className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+                  <a
+                    href={`tel:${company.contact.phoneLinks[i]}`}
+                    className="hover:text-foreground"
+                  >
+                    {phone}
+                  </a>
+                </li>
+              ))}
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
                 <a
-                  href="mailto:contato@alvor-energia.com.br"
+                  href={`mailto:${company.contact.email}`}
                   className="hover:text-foreground"
                 >
-                  contato@alvor-energia.com.br
+                  {company.contact.email}
                 </a>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
-                <span>Brasil — Atendimento em todo o território nacional</span>
+                <span>
+                  {company.location.full}
+                  <br />
+                  CEP {company.location.zip}
+                </span>
               </li>
             </ul>
           </div>
@@ -50,20 +59,20 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Redes sociais</h3>
             <div className="mt-4 flex gap-3">
               <a
-                href="https://instagram.com"
+                href={company.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-lg border bg-background text-muted-foreground transition-colors hover:border-emerald-500 hover:text-emerald-600"
-                aria-label="Instagram"
+                aria-label="Instagram @alvorenergia"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href={company.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-lg border bg-background text-muted-foreground transition-colors hover:border-emerald-500 hover:text-emerald-600"
-                aria-label="LinkedIn"
+                aria-label="LinkedIn Luis Carlos de Oliveira"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
@@ -79,8 +88,24 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t pt-6 text-center text-xs text-muted-foreground">
-          © {currentYear} Alvor Energia. Todos os direitos reservados.
+        <div className="mt-10 space-y-3 border-t pt-6 text-center text-xs text-muted-foreground">
+          <p>
+            © {currentYear} {company.name}. Todos os direitos reservados.{" "}
+            <Link href="/privacidade" className="hover:text-foreground hover:underline">
+              Política de Privacidade
+            </Link>
+          </p>
+          <p>
+            Powered by{" "}
+            <a
+              href={veltro.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground hover:text-emerald-600 hover:underline"
+            >
+              {veltro.name}
+            </a>
+          </p>
         </div>
       </div>
     </footer>

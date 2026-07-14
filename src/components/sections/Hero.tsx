@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Sun, Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { company, heroImage } from "@/lib/company";
 
 export function Hero() {
   return (
@@ -11,21 +13,20 @@ export function Hero() {
         <div>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
             <Zap className="h-3.5 w-3.5" aria-hidden="true" />
-            Transição energética inteligente
+            Energia solar e eólica
           </span>
 
           <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem]">
-            Energia solar que{" "}
+            Deixe o{" "}
             <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
-              transforma
+              sol
             </span>{" "}
-            seu futuro
+            e o vento pagarem sua conta de energia
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-            Reduza sua conta de luz em até 95% com soluções personalizadas de
-            energia solar e eficiência energética. Tecnologia, sustentabilidade
-            e confiança sob a liderança de Luis Carlos de Oliveira.
+            {company.tagline} Soluções energéticas para empresas e residências,
+            com liderança técnica de {company.leader}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -40,35 +41,38 @@ export function Hero() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="#servicos">Conhecer Serviços</a>
+              <a href="#projetos">Ver Projetos</a>
             </Button>
           </div>
         </div>
 
-        <div className="relative flex items-center justify-center">
-          <div className="relative aspect-square w-full max-w-md">
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 blur-3xl" />
-            <div className="relative flex h-full w-full flex-col items-center justify-center rounded-3xl border border-emerald-100 bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-orange-400 shadow-lg">
-                <Sun className="h-12 w-12 text-white" aria-hidden="true" />
+        <div className="relative">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 blur-3xl" />
+          <div className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-xl">
+            <Image
+              src={heroImage}
+              alt="Instalação de energia solar — Alvor Soluções Energéticas"
+              width={883}
+              height={427}
+              className="h-auto w-full object-cover"
+              priority
+            />
+            <div className="grid grid-cols-2 gap-px bg-emerald-100">
+              <div className="bg-white p-4 text-center">
+                <p className="text-2xl font-bold text-emerald-700">77+</p>
+                <p className="text-xs text-muted-foreground">Projetos no Instagram</p>
               </div>
-              <div className="mt-8 grid w-full grid-cols-2 gap-4">
-                <div className="rounded-xl bg-emerald-50 p-4 text-center">
-                  <p className="text-2xl font-bold text-emerald-700">95%</p>
-                  <p className="text-xs text-muted-foreground">Economia média</p>
-                </div>
-                <div className="rounded-xl bg-cyan-50 p-4 text-center">
-                  <p className="text-2xl font-bold text-cyan-700">25+</p>
-                  <p className="text-xs text-muted-foreground">Anos de vida útil</p>
-                </div>
-                <div className="rounded-xl bg-slate-50 p-4 text-center">
-                  <p className="text-2xl font-bold text-slate-700">100%</p>
-                  <p className="text-xs text-muted-foreground">Energia limpa</p>
-                </div>
-                <div className="rounded-xl bg-teal-50 p-4 text-center">
-                  <p className="text-2xl font-bold text-teal-700">24h</p>
-                  <p className="text-xs text-muted-foreground">Resposta do orçamento</p>
-                </div>
+              <div className="bg-white p-4 text-center">
+                <p className="text-2xl font-bold text-cyan-700">24h</p>
+                <p className="text-xs text-muted-foreground">Resposta do orçamento</p>
+              </div>
+              <div className="bg-white p-4 text-center">
+                <p className="text-2xl font-bold text-slate-700">MG</p>
+                <p className="text-xs text-muted-foreground">Base em Belo Horizonte</p>
+              </div>
+              <div className="bg-white p-4 text-center">
+                <p className="text-2xl font-bold text-teal-700">BR</p>
+                <p className="text-xs text-muted-foreground">Atendimento nacional</p>
               </div>
             </div>
           </div>

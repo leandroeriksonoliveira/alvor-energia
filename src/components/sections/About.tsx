@@ -1,29 +1,30 @@
-import { Award, Leaf, Shield, Users } from "lucide-react";
+import { Award, Leaf, MapPin, Shield } from "lucide-react";
+import { company } from "@/lib/company";
 
 const values = [
   {
     icon: Shield,
     title: "Confiança",
     description:
-      "Projetos dimensionados com rigor técnico e equipamentos de alta performance.",
+      "Equipe de engenheiros com conhecimentos técnicos e legais para projetos seguros e eficientes.",
   },
   {
     icon: Leaf,
     title: "Sustentabilidade",
     description:
-      "Contribuímos para um planeta mais limpo com energia 100% renovável.",
+      "Energia solar e eólica para reduzir custos e o impacto ambiental da sua operação.",
   },
   {
     icon: Award,
     title: "Excelência",
     description:
-      "Compromisso com qualidade em cada etapa, da consultoria à instalação.",
+      "Portfólio de produtos e serviços atuais e de qualidade, com propostas eficientes e eficazes.",
   },
   {
-    icon: Users,
-    title: "Parceria",
+    icon: MapPin,
+    title: "Presença nacional",
     description:
-      "Acompanhamento próximo e suporte contínuo pós-instalação.",
+      "Sede em Belo Horizonte — MG, com atendimento em todo o território brasileiro.",
   },
 ];
 
@@ -37,24 +38,21 @@ export function About() {
               Quem Somos
             </span>
             <h2 className="mt-3 text-3xl font-bold text-foreground md:text-4xl">
-              Liderança técnica que você pode confiar
+              {company.name}
             </h2>
             <p className="mt-6 leading-relaxed text-muted-foreground">
-              A <strong className="text-foreground">Alvor Energia</strong> nasceu
-              da visão de{" "}
-              <strong className="text-foreground">
-                Luis Carlos de Oliveira
-              </strong>
-              , engenheiro com décadas de experiência em energia solar e
-              eficiência energética. Nossa missão é democratizar o acesso à
-              energia limpa, oferecendo soluções personalizadas que geram
-              economia real e impacto ambiental positivo.
+              {company.about}
             </p>
             <p className="mt-4 leading-relaxed text-muted-foreground">
-              Combinamos tecnologia de ponta, equipe especializada e atendimento
-              humanizado para entregar projetos que superam expectativas — do
-              residencial ao industrial.
+              Sob a liderança de{" "}
+              <strong className="text-foreground">{company.leader}</strong>,{" "}
+              {company.leaderRole.toLowerCase()}, combinamos experiência em
+              engenharia, gestão de projetos e energias renováveis para entregar
+              soluções que geram economia real.
             </p>
+            <blockquote className="mt-6 border-l-4 border-emerald-500 pl-4 italic text-muted-foreground">
+              &ldquo;{company.vision}&rdquo;
+            </blockquote>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,31 +14,33 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://alvor-energia.vercel.app"
   ),
   title: {
-    default: "Alvor Energia | Energia Solar e Eficiência Energética",
+    default: "Alvor Soluções Energéticas | Energia Solar e Eólica",
     template: "%s | Alvor Energia",
   },
   description:
-    "Energia solar e eficiência energética com excelência técnica. Liderança de Luis Carlos de Oliveira. Reduza sua conta de luz em até 95%.",
+    "Se tudo gira em torno do Sol, porque a sua energia não? Energia solar e eólica em Belo Horizonte e todo o Brasil. Liderança de Luis Carlos de Oliveira.",
   keywords: [
     "energia solar",
-    "painéis solares",
-    "eficiência energética",
+    "energia eólica",
+    "Alvor Soluções Energéticas",
     "Alvor Energia",
+    "Belo Horizonte",
     "Luis Carlos de Oliveira",
   ],
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "Alvor Energia",
-    title: "Alvor Energia | Energia Solar e Eficiência Energética",
+    siteName: "Alvor Soluções Energéticas",
+    title: "Alvor Soluções Energéticas | Energia Solar e Eólica",
     description:
-      "Transição energética inteligente. Solicite seu orçamento gratuito e receba proposta personalizada em até 24h.",
+      "Deixe o sol e o vento pagarem sua conta de energia. Orçamento gratuito em até 24h.",
+    images: [{ url: "/images/logo-full.png", alt: "Alvor Soluções Energéticas" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alvor Energia | Energia Solar",
+    title: "Alvor Soluções Energéticas",
     description:
-      "Reduza sua conta de luz em até 95% com energia solar. Orçamento gratuito em 24h.",
+      "Energia solar e eólica. Belo Horizonte — MG. Atendimento em todo o Brasil.",
   },
   robots: {
     index: true,
@@ -54,6 +57,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

@@ -42,6 +42,12 @@ export const quoteFormSchema = z.object({
     .number({ invalid_type_error: "Informe o valor médio da conta de luz" })
     .min(50, "Valor mínimo de R$ 50,00")
     .max(999999, "Valor muito alto"),
+  lgpdConsent: z.literal(true, {
+    errorMap: () => ({
+      message:
+        "É necessário autorizar o tratamento dos seus dados conforme a LGPD",
+    }),
+  }),
 });
 
 export type QuoteFormValues = z.infer<typeof quoteFormSchema>;
@@ -84,6 +90,8 @@ export function parseQuoteFormData(formData: FormData) {
   const digits = averageBillRaw?.replace(/\D/g, "") ?? "";
   const averageBill = digits ? parseInt(digits, 10) / 100 : NaN;
 
+  const lgpdConsent = formData.get("lgpdConsent") === "true";
+
   return quoteFormSchema.safeParse({
     fullName: formData.get("fullName"),
     phone: formData.get("phone"),
@@ -91,6 +99,7 @@ export function parseQuoteFormData(formData: FormData) {
     cityState: formData.get("cityState"),
     propertyType: formData.get("propertyType"),
     averageBill,
+    lgpdConsent,
   });
 }
 

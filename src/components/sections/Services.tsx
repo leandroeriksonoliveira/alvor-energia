@@ -4,6 +4,7 @@ import {
   Home,
   Leaf,
   Tractor,
+  Wind,
   Zap,
 } from "lucide-react";
 
@@ -37,11 +38,18 @@ const services = [
     color: "green",
   },
   {
+    icon: Wind,
+    title: "Energia Eólica",
+    description:
+      "Instalação de sistemas eólicos para complementar a geração de energia e ampliar a autonomia energética.",
+    color: "sky",
+  },
+  {
     icon: Zap,
     title: "Eficiência Energética",
     description:
       "Auditorias, retrofit e otimização de consumo. Reduza desperdícios antes mesmo de gerar energia.",
-    color: "sky",
+    color: "teal",
   },
 ];
 
@@ -65,8 +73,8 @@ export function Services() {
             Soluções completas em energia
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Do projeto à instalação e manutenção, oferecemos um ecossistema
-            completo para sua transição energética.
+            Energia solar e eólica para empresas e residências — do projeto à
+            instalação, com equipe de engenharia especializada.
           </p>
         </div>
 
