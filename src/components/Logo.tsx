@@ -31,7 +31,7 @@ export function Logo({ className, showText = false, size = "md" }: LogoProps) {
         alt={logo.alt}
         width={dim.width}
         height={dim.height}
-        className={dim.className}
+        className={cn(dim.className, "object-contain object-left")}
         priority
       />
       {showText && (

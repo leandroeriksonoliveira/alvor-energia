@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "Alvor Soluções Energéticas | Energia Solar e Eólica",
     description:
       "Deixe o sol e o vento pagarem sua conta de energia. Orçamento gratuito em até 24h.",
-    images: [{ url: "/images/logo-full.png", alt: "Alvor Soluções Energéticas" }],
+    images: [{ url: "/images/logo-alvor.jpg", alt: "Alvor Soluções Energéticas" }],
   },
   twitter: {
     card: "summary_large_image",

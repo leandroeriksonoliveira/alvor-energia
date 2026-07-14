@@ -47,27 +47,27 @@ export const projects = [
     location: "Volta Redonda, RJ",
     description:
       "Projeto aprovado com financiamento e instalação especializada. Gere sua energia durante a obra.",
-    image: "/images/projects/banner.jpg",
-  },
-  {
-    title: "Obra concluída",
-    location: "Brasil",
-    description:
-      "Mais uma instalação entregue com excelência técnica pela equipe Alvor.",
     image: "/images/projects/instalacao.jpg",
   },
   {
-    title: "Energia solar fotovoltaica",
+    title: "Energia solar e eólica",
     location: "Atendimento nacional",
     description:
-      "Soluções completas em energia solar para reduzir custos e aumentar a autonomia energética.",
-    image: "/images/projects/solar-panels.png",
+      "Soluções integradas em energias renováveis para reduzir custos e ampliar autonomia energética.",
+    image: "/images/projects/instalacao-full.jpg",
+  },
+  {
+    title: "Economia na conta de luz",
+    location: "Brasil",
+    description:
+      "Orientação técnica sobre bandeiras tarifárias e como a geração própria reduz sua dependência da rede.",
+    image: "/images/projects/infografico-bandeiras.png",
   },
 ] as const;
 
 export const logo = {
-  full: "/images/logo-full.png",
+  full: "/images/logo-alvor.jpg",
   alt: "Alvor Soluções Energéticas — logo",
 } as const;
 
-export const heroImage = "/images/hero-solar-full.jpg";
+export const heroImage = "/images/projects/instalacao-full.jpg";
