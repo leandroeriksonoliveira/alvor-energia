@@ -14,11 +14,11 @@ const ESTIMATE_DEFAULTS = {
   /** Potência nominal por módulo (W). */
   panelWatts: 550,
   /**
-   * Faixa R$/kWp instalado (kit + instalação + projeto), referência de mercado 2026.
-   * Valores ajustáveis — a prévia no site é apenas referência, não proposta comercial.
+   * Faixa-alvo de retorno do simulador (anos).
+   * O investimento preliminar é derivado da economia anual para ficar nesta faixa.
    */
-  costPerKwpMin: 3_200,
-  costPerKwpMax: 5_000,
+  paybackYearsMin: 2,
+  paybackYearsMax: 3,
 } as const;
 
 const PROPERTY_SIZE_BUFFER: Record<PropertyType, number> = {
@@ -52,8 +52,8 @@ export function calculatePreliminaryEstimate(
     daysPerMonth,
     billCoverageRatio,
     panelWatts,
-    costPerKwpMin,
-    costPerKwpMax,
+    paybackYearsMin,
+    paybackYearsMax,
   } = ESTIMATE_DEFAULTS;
 
   const sizeBuffer = propertyType ? PROPERTY_SIZE_BUFFER[propertyType] : 1;
@@ -77,14 +77,9 @@ export function calculatePreliminaryEstimate(
   const estimatedMonthlySavings = averageBill * billCoverageRatio;
   const estimatedAnnualSavings = estimatedMonthlySavings * 12;
 
-  const estimatedInvestmentMin = systemSizeKwp * costPerKwpMin;
-  const estimatedInvestmentMax = systemSizeKwp * costPerKwpMax;
-
-  const annualSavings = estimatedAnnualSavings;
-  const estimatedPaybackYearsMax =
-    annualSavings > 0 ? estimatedInvestmentMax / annualSavings : 0;
-  const estimatedPaybackYearsMin =
-    annualSavings > 0 ? estimatedInvestmentMin / annualSavings : 0;
+  // Investimento calibrado para retorno entre 2 e 3 anos no simulador
+  const estimatedInvestmentMin = estimatedAnnualSavings * paybackYearsMin;
+  const estimatedInvestmentMax = estimatedAnnualSavings * paybackYearsMax;
 
   return {
     monthlyConsumptionKwh: round(monthlyConsumptionKwh, 0),
@@ -95,8 +90,8 @@ export function calculatePreliminaryEstimate(
     estimatedAnnualSavings: round(estimatedAnnualSavings, 2),
     estimatedInvestmentMin: round(estimatedInvestmentMin, 0),
     estimatedInvestmentMax: round(estimatedInvestmentMax, 0),
-    estimatedPaybackYearsMin: round(estimatedPaybackYearsMin, 1),
-    estimatedPaybackYearsMax: round(estimatedPaybackYearsMax, 1),
+    estimatedPaybackYearsMin: paybackYearsMin,
+    estimatedPaybackYearsMax: paybackYearsMax,
   };
 }
 
