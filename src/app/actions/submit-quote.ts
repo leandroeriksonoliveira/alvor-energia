@@ -2,6 +2,7 @@
 
 import { put } from "@vercel/blob";
 import { calculatePreliminaryEstimate } from "@/lib/quote-estimate";
+import { notifyLead } from "@/lib/notify-lead";
 import {
   initialQuoteState,
   parseQuoteFormData,
@@ -10,13 +11,7 @@ import {
 } from "@/lib/quote-schema";
 
 /**
- * Server Action: submit quote form with file upload.
- *
- * Integration points:
- * - Database: persist lead to Postgres (Neon/Supabase via Vercel Marketplace)
- * - CRM: sync to HubSpot, Pipedrive, etc.
- * - WhatsApp Business API: notify sales team
- * - Transactional email: Resend, SendGrid for confirmation
+ * Server Action: submit quote form with file upload and team notification.
  */
 export async function submitQuote(
   _prevState: QuoteSubmitState,
@@ -89,21 +84,16 @@ export async function submitQuote(
       source: "website-orcamento-inteligente",
     };
 
-    // TODO: Integrate with database
-    // await db.insert(leads).values(leadPayload);
     console.log("[submitQuote] Lead captured:", JSON.stringify(leadPayload));
 
-    // TODO: Integrate WhatsApp Business API
-    // await notifyWhatsAppTeam(leadPayload);
-
-    // TODO: Integrate transactional email
-    // await sendConfirmationEmail(parsed.data.email);
+    const notification = await notifyLead(leadPayload);
 
     return {
       success: true,
       estimate,
+      whatsappUrl: notification.whatsappUrl,
       message:
-        "Obrigado! Recebemos suas informações. Abaixo está uma estimativa preliminar — será necessária análise técnica adicional, visita ou estudo detalhado e envio de proposta formal pela equipe Alvor. Entraremos em contato em até 24h pelo WhatsApp informado.",
+        "Obrigado! Recebemos suas informações. A prévia abaixo é apenas uma referência — será necessária análise técnica adicional e envio de proposta formal pela equipe Alvor. Seus dados foram encaminhados por e-mail e WhatsApp. Entraremos em contato em até 24h.",
     };
   } catch (error) {
     console.error("[submitQuote] Error:", error);

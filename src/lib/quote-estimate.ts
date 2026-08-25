@@ -13,8 +13,12 @@ const ESTIMATE_DEFAULTS = {
   billCoverageRatio: 0.92,
   /** Potência nominal por módulo (W). */
   panelWatts: 550,
-  costPerKwpMin: 3_800,
-  costPerKwpMax: 5_200,
+  /**
+   * Faixa R$/kWp instalado (kit + instalação + projeto), referência de mercado 2026.
+   * Valores ajustáveis — a prévia no site é apenas referência, não proposta comercial.
+   */
+  costPerKwpMin: 3_200,
+  costPerKwpMax: 5_000,
 } as const;
 
 const PROPERTY_SIZE_BUFFER: Record<PropertyType, number> = {
@@ -118,4 +122,4 @@ export function formatKwp(value: number): string {
 }
 
 export const ESTIMATE_DISCLAIMER =
-  "Estimativa preliminar com base no valor informado da conta. Não substitui visita técnica, parecer de acesso, projeto executivo nem proposta comercial formal da Alvor.";
+  "Esta prévia é apenas uma referência com base no valor informado da conta. Não substitui visita técnica, parecer de acesso, projeto executivo nem proposta comercial formal da Alvor.";

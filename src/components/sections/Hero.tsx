@@ -77,7 +77,7 @@ export function Hero() {
                 {company.tagline}
               </p>
               <p className="mt-0.5 text-xs text-emerald-200/80">
-                Projeto · Instalação · Operação — {company.location.full}
+                Projeto · Instalação · Operação
               </p>
             </div>
           </div>

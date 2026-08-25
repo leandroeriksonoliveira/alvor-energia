@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { PreliminaryEstimate } from "@/lib/quote-estimate";
 
 export const PROPERTY_TYPES = [
   "residential",
@@ -106,12 +107,11 @@ export function parseQuoteFormData(formData: FormData) {
   });
 }
 
-import type { PreliminaryEstimate } from "@/lib/quote-estimate";
-
 export type QuoteSubmitState = {
   success: boolean;
   message: string;
   estimate?: PreliminaryEstimate;
+  whatsappUrl?: string;
   fieldErrors?: Record<string, string[]>;
   fileError?: string;
 };

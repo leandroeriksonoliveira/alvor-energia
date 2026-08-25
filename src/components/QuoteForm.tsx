@@ -94,8 +94,11 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
   useEffect(() => {
     if (state.success) {
       setShowSuccess(true);
+      if (state.whatsappUrl) {
+        window.open(state.whatsappUrl, "_blank", "noopener,noreferrer");
+      }
     }
-  }, [state.success]);
+  }, [state.success, state.whatsappUrl]);
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
@@ -147,10 +150,9 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
               Orçamento Inteligente
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Informe nome, WhatsApp e valor da conta para registrarmos seu
-              interesse. As informações coletadas são preliminares — a proposta
-              formal depende de análise e estudo técnico adicional pela equipe
-              Alvor.
+              Informe nome, WhatsApp e valor da conta. A prévia gerada é apenas
+              uma referência — a proposta formal depende de análise técnica pela
+              equipe Alvor. Seus dados serão enviados por e-mail e WhatsApp.
             </p>
           </div>
         )}
@@ -416,7 +418,18 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
               </div>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="flex-col gap-2 sm:flex-col">
+            {state.whatsappUrl && (
+              <Button asChild variant="outline" className="w-full">
+                <a
+                  href={state.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Abrir WhatsApp com a solicitação
+                </a>
+              </Button>
+            )}
             <Button
               onClick={handleSuccessClose}
               className="w-full bg-emerald-600 hover:bg-emerald-700"
