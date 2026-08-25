@@ -4,7 +4,6 @@ import { put } from "@vercel/blob";
 import { calculatePreliminaryEstimate } from "@/lib/quote-estimate";
 import { notifyLead } from "@/lib/notify-lead";
 import {
-  initialQuoteState,
   parseQuoteFormData,
   validateBillFile,
   type QuoteSubmitState,
@@ -104,5 +103,3 @@ export async function submitQuote(
     };
   }
 }
-
-export { initialQuoteState };
