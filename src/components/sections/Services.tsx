@@ -5,8 +5,7 @@ import {
   MessageCircle,
   Tractor,
 } from "lucide-react";
-import Link from "next/link";
-import { segments } from "@/lib/company";
+import { company, segments } from "@/lib/company";
 
 const icons = {
   residential: Home,
@@ -21,6 +20,16 @@ const accents = [
   "from-cyan-500/15 to-cyan-500/5 text-cyan-800",
   "from-amber-500/15 to-amber-500/5 text-amber-800",
 ];
+
+const whatsappPhone =
+  company.contact.phones.find((p) => p.label === "WhatsApp")?.link.replace(
+    /\D/g,
+    ""
+  ) ?? "5531973065264";
+
+const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+  "Olá! Gostaria de falar com um especialista da Alvor sobre energia solar."
+)}`;
 
 export function Services() {
   return (
@@ -81,12 +90,14 @@ export function Services() {
               </p>
             </div>
           </div>
-          <Link
-            href="/orcamento"
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="shrink-0 text-sm font-semibold text-emerald-700 hover:underline"
           >
-            Falar com especialista →
-          </Link>
+            Falar com especialista no WhatsApp →
+          </a>
         </div>
       </div>
     </section>
