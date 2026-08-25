@@ -1,35 +1,39 @@
 import Link from "next/link";
-import { ArrowRight, Calculator } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { company } from "@/lib/company";
 
 export function QuoteCta() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 px-6 py-12 text-white shadow-2xl sm:px-12 md:py-16">
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
+        <div className="relative overflow-hidden rounded-[1.75rem] gradient-brand px-6 py-12 text-white shadow-2xl shadow-emerald-900/20 sm:px-12 md:py-16">
+          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-amber-300/20 blur-3xl" />
 
-          <div className="relative mx-auto max-w-2xl text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm">
-              <Calculator className="h-7 w-7" aria-hidden="true" />
+          <div className="relative mx-auto grid max-w-4xl gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                Orçador Inteligente
+              </div>
+              <h2 className="mt-5 text-balance text-3xl font-bold md:text-4xl">
+                Proposta personalizada para o seu perfil de consumo
+              </h2>
+              <p className="mt-4 max-w-xl text-emerald-50">
+                Envie sua conta de energia e receba uma análise técnica da
+                equipe Alvor. Atendimento comercial:{" "}
+                {company.contact.phones[0].value}.
+              </p>
             </div>
-
-            <h2 className="mt-6 text-3xl font-bold md:text-4xl">
-              Descubra quanto você pode economizar
-            </h2>
-            <p className="mt-4 text-lg text-emerald-50">
-              Use nosso Orçador Inteligente e receba uma proposta personalizada
-              em até 24 horas. Rápido, gratuito e sem compromisso.
-            </p>
 
             <Button
               asChild
               size="lg"
-              className="mt-8 bg-white text-emerald-700 hover:bg-emerald-50"
+              className="h-12 bg-white px-8 text-emerald-800 hover:bg-emerald-50"
             >
               <Link href="/orcamento">
-                Acessar Orçador Inteligente
+                Solicitar orçamento
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>

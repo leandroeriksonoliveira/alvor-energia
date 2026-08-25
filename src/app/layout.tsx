@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -14,48 +14,37 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://alvor-energia.vercel.app"
   ),
   title: {
-    default: "Alvor Soluções Energéticas | Energia Solar e Eólica",
+    default: "Alvor Soluções Energéticas | Energia Fotovoltaica",
     template: "%s | Alvor Energia",
   },
   description:
-    "Se tudo gira em torno do Sol, porque a sua energia não? Energia solar e eólica em Belo Horizonte e todo o Brasil. Liderança de Luis Carlos de Oliveira.",
+    "Energia fotovoltaica com eficiência e rentabilidade. Projeto, instalação, operação e manutenção — experiência nacional e internacional. Belo Horizonte — MG.",
   keywords: [
+    "energia fotovoltaica",
     "energia solar",
-    "energia eólica",
     "Alvor Soluções Energéticas",
-    "Alvor Energia",
     "Belo Horizonte",
-    "Luis Carlos de Oliveira",
+    "Luís Carlos de Oliveira",
+    "sistema on-grid",
   ],
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Alvor Soluções Energéticas",
-    title: "Alvor Soluções Energéticas | Energia Solar e Eólica",
+    title: "Alvor Soluções Energéticas | Energia Fotovoltaica",
     description:
-      "Deixe o sol e o vento pagarem sua conta de energia. Orçamento gratuito em até 24h.",
+      "Do projeto à operação: sistemas solares com engenharia completa e garantia Alvor.",
     images: [{ url: "/images/logo-alvor.jpg", alt: "Alvor Soluções Energéticas" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Alvor Soluções Energéticas",
-    description:
-      "Energia solar e eólica. Belo Horizonte — MG. Atendimento em todo o Brasil.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${jakarta.variable} font-sans antialiased`}>
         {children}
         <CookieConsent />
       </body>

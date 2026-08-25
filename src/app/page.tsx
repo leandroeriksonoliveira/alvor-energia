@@ -3,9 +3,11 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Services } from "@/components/sections/Services";
+import { Process } from "@/components/sections/Process";
+import { Guarantees } from "@/components/sections/Guarantees";
 import { Projects } from "@/components/sections/Projects";
 import { QuoteCta } from "@/components/sections/QuoteCta";
-import { Testimonials } from "@/components/sections/Testimonials";
+import { Differentials } from "@/components/sections/Differentials";
 
 export default function HomePage() {
   return (
@@ -15,9 +17,11 @@ export default function HomePage() {
         <Hero />
         <About />
         <Services />
+        <Process />
+        <Guarantees />
         <Projects />
         <QuoteCta />
-        <Testimonials />
+        <Differentials />
       </main>
       <Footer />
     </>
