@@ -13,10 +13,7 @@ const ESTIMATE_DEFAULTS = {
   billCoverageRatio: 0.92,
   /** Potência nominal por módulo (W). */
   panelWatts: 550,
-  /**
-   * Faixa-alvo de retorno do simulador (anos).
-   * O investimento preliminar é derivado da economia anual para ficar nesta faixa.
-   */
+  /** Retorno de investimento alvo (anos) — faixa exibida ao cliente. */
   paybackYearsMin: 2,
   paybackYearsMax: 3,
 } as const;
@@ -77,9 +74,11 @@ export function calculatePreliminaryEstimate(
   const estimatedMonthlySavings = averageBill * billCoverageRatio;
   const estimatedAnnualSavings = estimatedMonthlySavings * 12;
 
-  // Investimento calibrado para retorno entre 2 e 3 anos no simulador
   const estimatedInvestmentMin = estimatedAnnualSavings * paybackYearsMin;
   const estimatedInvestmentMax = estimatedAnnualSavings * paybackYearsMax;
+
+  const estimatedPaybackYearsMin = paybackYearsMin;
+  const estimatedPaybackYearsMax = paybackYearsMax;
 
   return {
     monthlyConsumptionKwh: round(monthlyConsumptionKwh, 0),
@@ -90,8 +89,8 @@ export function calculatePreliminaryEstimate(
     estimatedAnnualSavings: round(estimatedAnnualSavings, 2),
     estimatedInvestmentMin: round(estimatedInvestmentMin, 0),
     estimatedInvestmentMax: round(estimatedInvestmentMax, 0),
-    estimatedPaybackYearsMin: paybackYearsMin,
-    estimatedPaybackYearsMax: paybackYearsMax,
+    estimatedPaybackYearsMin: round(estimatedPaybackYearsMin, 1),
+    estimatedPaybackYearsMax: round(estimatedPaybackYearsMax, 1),
   };
 }
 
@@ -117,4 +116,4 @@ export function formatKwp(value: number): string {
 }
 
 export const ESTIMATE_DISCLAIMER =
-  "Esta prévia é apenas uma referência com base no valor informado da conta. Não substitui visita técnica, parecer de acesso, projeto executivo nem proposta comercial formal da Alvor.";
+  "Esta prévia é apenas uma referência com base no valor informado da conta. Investimento estimado pela economia anual com retorno de referência entre 2 e 3 anos. Não substitui visita técnica, parecer de acesso, projeto executivo nem proposta comercial formal da Alvor.";
