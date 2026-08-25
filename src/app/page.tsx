@@ -7,7 +7,6 @@ import { Process } from "@/components/sections/Process";
 import { Guarantees } from "@/components/sections/Guarantees";
 import { Projects } from "@/components/sections/Projects";
 import { QuoteCta } from "@/components/sections/QuoteCta";
-import { Differentials } from "@/components/sections/Differentials";
 
 export default function HomePage() {
   return (
@@ -21,7 +20,6 @@ export default function HomePage() {
         <Guarantees />
         <Projects />
         <QuoteCta />
-        <Differentials />
       </main>
       <Footer />
     </>

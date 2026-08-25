@@ -9,8 +9,8 @@ export function Footer() {
 
   return (
     <footer id="contato" className="border-t bg-slate-950 text-slate-300">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-3">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <div className="grid gap-8 md:grid-cols-3">
           <div>
             <Logo size="md" />
             <p className="mt-4 text-sm leading-relaxed">
@@ -95,7 +95,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 space-y-3 border-t border-white/10 pt-6 text-center text-xs text-slate-500">
+        <div className="mt-8 space-y-2 border-t border-white/10 pt-5 text-center text-xs text-slate-500">
           <p>
             © {currentYear} {company.legalName}. Todos os direitos reservados.{" "}
             <Link

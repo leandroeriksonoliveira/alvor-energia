@@ -52,6 +52,18 @@
     @apply text-xs font-semibold uppercase tracking-[0.2em] text-primary;
   }
 
+  .section {
+    @apply py-10 md:py-12;
+  }
+
+  .section-tight {
+    @apply py-8 md:py-10;
+  }
+
+  .section-header {
+    @apply mb-6 md:mb-7;
+  }
+
   .glass-panel {
     @apply border border-white/60 bg-white/70 shadow-lg shadow-slate-900/5 backdrop-blur-xl;
   }

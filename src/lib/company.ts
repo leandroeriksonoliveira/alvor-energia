@@ -141,27 +141,42 @@ export const heroStats = [
   { value: "BR +", label: "Experiência nacional e internacional" },
 ] as const;
 
-export const projects = [
+export const projectGallery = [
   {
-    title: "Engenharia de instalação",
-    location: "Brasil",
+    id: "aerial",
+    title: "Usinas de grande porte",
+    tag: "Geração desde o 1º dia",
     description:
-      "Projetos elétricos e mecânicos com estrutura metálica, placas solares e inversores dimensionados por especialistas.",
-    image: "/images/projects/instalacao-full.jpg",
+      "Instalação em solo com dezenas de módulos dimensionados para máxima produção On-Grid.",
+    image: "/images/projects/instalacao-aerea.jpg",
+    alt: "Vista aérea de usina fotovoltaica em solo — Alvor Energia",
+    href: "/orcamento",
+    cta: "Solicitar projeto similar",
+    layout: "featured" as const,
   },
   {
-    title: "Geração desde o 1º dia",
-    location: "On-Grid",
+    id: "inverter",
+    title: "Infraestrutura elétrica",
+    tag: "Engenharia de instalação",
     description:
-      "Sistemas fotovoltaicos conectados à rede, com injeção de excedente e créditos de energia para compensação futura.",
-    image: "/images/projects/instalacao.jpg",
+      "Inversores homologados, cabeamento organizado e prontidão para energização.",
+    image: "/images/projects/inversor-instalacao.jpg",
+    alt: "Instalação de inversor fotovoltaico — Alvor Energia",
+    href: "#processo",
+    cta: "Ver metodologia",
+    layout: "wide" as const,
   },
   {
-    title: "Eficiência tarifária",
-    location: "Consultoria Alvor",
+    id: "ground",
+    title: "Instalação em solo",
+    tag: "Engenharia de instalação",
     description:
-      "Orientação técnica sobre bandeiras tarifárias e como a geração própria reduz a dependência da concessionária.",
-    image: "/images/projects/infografico-bandeiras.png",
+      "Estrutura metálica, fixação e alinhamento de módulos com engenharia completa.",
+    image: "/images/projects/instalacao-solo.jpg",
+    alt: "Painéis solares instalados em solo — Alvor Energia",
+    href: "/orcamento",
+    cta: "Pedir orçamento",
+    layout: "compact" as const,
   },
 ] as const;
 
@@ -170,4 +185,4 @@ export const logo = {
   alt: "Alvor Soluções Energéticas — logo",
 } as const;
 
-export const heroImage = "/images/projects/instalacao-full.jpg";
+export const heroImage = "/images/projects/instalacao-aerea.jpg";

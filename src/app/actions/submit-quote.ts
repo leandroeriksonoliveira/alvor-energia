@@ -1,6 +1,7 @@
 "use server";
 
 import { put } from "@vercel/blob";
+import { calculatePreliminaryEstimate } from "@/lib/quote-estimate";
 import {
   initialQuoteState,
   parseQuoteFormData,
@@ -75,11 +76,17 @@ export async function submitQuote(
       }
     }
 
+    const estimate = calculatePreliminaryEstimate(
+      parsed.data.averageBill,
+      parsed.data.propertyType
+    );
+
     const leadPayload = {
       ...parsed.data,
+      estimate,
       billFileUrl: blobUrl,
       submittedAt: new Date().toISOString(),
-      source: "website-orcador",
+      source: "website-orcamento-inteligente",
     };
 
     // TODO: Integrate with database
@@ -94,8 +101,9 @@ export async function submitQuote(
 
     return {
       success: true,
+      estimate,
       message:
-        "Obrigado! Nossa equipe técnica liderada por Luis Carlos de Oliveira entrará em contato em até 24h com sua proposta comercial personalizada.",
+        "Obrigado! Recebemos suas informações. Abaixo está uma estimativa preliminar — será necessária análise técnica adicional, visita ou estudo detalhado e envio de proposta formal pela equipe Alvor. Entraremos em contato em até 24h pelo WhatsApp informado.",
     };
   } catch (error) {
     console.error("[submitQuote] Error:", error);

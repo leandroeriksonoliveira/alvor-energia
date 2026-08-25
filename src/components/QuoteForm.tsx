@@ -23,12 +23,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FileUpload } from "@/components/FileUpload";
+import { PreliminaryEstimateSummary } from "@/components/PreliminaryEstimateSummary";
 import {
   quoteFormSchema,
   PROPERTY_TYPES,
   PROPERTY_TYPE_LABELS,
   type QuoteFormValues,
 } from "@/lib/quote-schema";
+import { ESTIMATE_DISCLAIMER } from "@/lib/quote-estimate";
 import { maskPhoneBR, maskCurrencyBR, parseCurrencyBR } from "@/lib/masks";
 import { cn } from "@/lib/utils";
 
@@ -51,7 +53,7 @@ function SubmitButton({ disabled, pending }: { disabled?: boolean; pending: bool
           Enviando...
         </>
       ) : (
-        "Gerar Orçamento Rápido"
+        "Solicitar Orçamento Inteligente"
       )}
     </Button>
   );
@@ -62,7 +64,6 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
   const [isPending, startTransition] = useTransition();
   const [showSuccess, setShowSuccess] = useState(false);
   const [billFile, setBillFile] = useState<File | null>(null);
-  const [fileError, setFileError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const {
@@ -104,18 +105,14 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
   };
 
   const onSubmit = (data: QuoteFormValues) => {
-    if (!billFile) {
-      setFileError("Envie a conta de luz (PDF, PNG ou JPG)");
-      return;
-    }
-    setFileError(null);
-
     const formData = new FormData();
     formData.append("fullName", data.fullName);
     formData.append("phone", data.phone);
-    formData.append("email", data.email);
-    formData.append("cityState", data.cityState);
-    formData.append("propertyType", data.propertyType);
+    formData.append("email", data.email ?? "");
+    formData.append("cityState", data.cityState ?? "");
+    if (data.propertyType) {
+      formData.append("propertyType", data.propertyType);
+    }
     formData.append(
       "averageBill",
       data.averageBill.toLocaleString("pt-BR", {
@@ -123,7 +120,9 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
         currency: "BRL",
       })
     );
-    formData.append("billFile", billFile);
+    if (billFile) {
+      formData.append("billFile", billFile);
+    }
     formData.append("lgpdConsent", "true");
 
     startTransition(() => {
@@ -145,11 +144,13 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
         {!compact && (
           <div className="mb-2">
             <h2 className="text-xl font-bold text-foreground md:text-2xl">
-              Orçador Inteligente
+              Orçamento Inteligente
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Preencha os dados abaixo e receba uma proposta personalizada em
-              até 24 horas.
+              Informe nome, WhatsApp e valor da conta para registrarmos seu
+              interesse. As informações coletadas são preliminares — a proposta
+              formal depende de análise e estudo técnico adicional pela equipe
+              Alvor.
             </p>
           </div>
         )}
@@ -186,7 +187,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="phone">Telefone / WhatsApp *</Label>
+            <Label htmlFor="phone">WhatsApp *</Label>
             <Input
               id="phone"
               name="phone"
@@ -214,12 +215,53 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">E-mail *</Label>
+            <Label htmlFor="averageBill">Valor médio da conta de luz *</Label>
+            <Input
+              id="averageBill"
+              name="averageBill"
+              inputMode="numeric"
+              placeholder="R$ 0,00"
+              value={
+                averageBillValue
+                  ? maskCurrencyBR(String(Math.round(averageBillValue * 100)))
+                  : ""
+              }
+              aria-invalid={
+                !!errors.averageBill || !!serverFieldError("averageBill")
+              }
+              aria-describedby={
+                errors.averageBill || serverFieldError("averageBill")
+                  ? "averageBill-error"
+                  : undefined
+              }
+              onChange={(e) => {
+                const parsed = parseCurrencyBR(e.target.value);
+                setValue("averageBill", parsed, { shouldValidate: true });
+              }}
+            />
+            {(errors.averageBill || serverFieldError("averageBill")) && (
+              <p id="averageBill-error" className="text-sm text-destructive">
+                {errors.averageBill?.message ||
+                  serverFieldError("averageBill")}
+              </p>
+            )}
+            {averageBillValue && averageBillValue >= 50 && !errors.averageBill && (
+              <PreliminaryEstimateSummary
+                averageBill={averageBillValue}
+                propertyType={propertyType}
+                compact
+                className="mt-2"
+              />
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">E-mail</Label>
             <Input
               id="email"
               type="email"
               inputMode="email"
-              placeholder="seu@email.com"
+              placeholder="seu@email.com (opcional)"
               autoComplete="email"
               aria-invalid={!!errors.email || !!serverFieldError("email")}
               aria-describedby={
@@ -236,11 +278,11 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
             )}
           </div>
 
-          <div className="space-y-2 sm:col-span-2">
-            <Label htmlFor="cityState">Cidade / Estado *</Label>
+          <div className="space-y-2">
+            <Label htmlFor="cityState">Cidade / Estado</Label>
             <Input
               id="cityState"
-              placeholder="Ex: São Paulo, SP"
+              placeholder="Ex: Belo Horizonte, MG (opcional)"
               autoComplete="address-level2"
               aria-invalid={
                 !!errors.cityState || !!serverFieldError("cityState")
@@ -261,7 +303,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
         </div>
 
         <div className="space-y-3">
-          <Label>Tipo de imóvel *</Label>
+          <Label>Tipo de imóvel</Label>
           <RadioGroup
             value={propertyType}
             onValueChange={(value) =>
@@ -297,46 +339,14 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="averageBill">Valor médio da conta de luz *</Label>
-          <Input
-            id="averageBill"
-            name="averageBill"
-            inputMode="numeric"
-            placeholder="R$ 0,00"
-            value={
-              averageBillValue
-                ? maskCurrencyBR(String(Math.round(averageBillValue * 100)))
-                : ""
-            }
-            aria-invalid={
-              !!errors.averageBill || !!serverFieldError("averageBill")
-            }
-            aria-describedby={
-              errors.averageBill || serverFieldError("averageBill")
-                ? "averageBill-error"
-                : undefined
-            }
-            onChange={(e) => {
-              const parsed = parseCurrencyBR(e.target.value);
-              setValue("averageBill", parsed, { shouldValidate: true });
-            }}
-          />
-          {(errors.averageBill || serverFieldError("averageBill")) && (
-            <p id="averageBill-error" className="text-sm text-destructive">
-              {errors.averageBill?.message ||
-                serverFieldError("averageBill")}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="billFile">Conta de luz *</Label>
+          <Label htmlFor="billFile">Conta de luz (opcional)</Label>
+          <p className="text-xs text-muted-foreground">
+            Se preferir, anexe a conta para acelerar a análise. Não é
+            obrigatório para enviar.
+          </p>
           <FileUpload
-            onFileChange={(file) => {
-              setBillFile(file);
-              if (file) setFileError(null);
-            }}
-            error={state.fileError || fileError || undefined}
+            onFileChange={setBillFile}
+            error={state.fileError || undefined}
           />
         </div>
 
@@ -387,13 +397,23 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
           else setShowSuccess(true);
         }}
       >
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-emerald-700">
-              Orçamento solicitado!
+              Solicitação registrada
             </DialogTitle>
-            <DialogDescription className="pt-2 text-base leading-relaxed text-foreground">
-              {state.message}
+            <DialogDescription asChild>
+              <div className="space-y-4 pt-2 text-base leading-relaxed text-foreground">
+                <p>{state.message}</p>
+
+                {state.estimate && (
+                  <PreliminaryEstimateSummary estimate={state.estimate} />
+                )}
+
+                <p className="text-sm text-muted-foreground">
+                  {ESTIMATE_DISCLAIMER}
+                </p>
+              </div>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

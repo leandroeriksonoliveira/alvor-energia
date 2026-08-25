@@ -25,19 +25,18 @@ export const quoteFormSchema = z.object({
     .min(3, "Nome deve ter pelo menos 3 caracteres"),
   phone: z
     .string()
-    .min(1, "Informe seu telefone/WhatsApp")
-    .regex(phoneRegex, "Telefone inválido. Use o formato (XX) XXXXX-XXXX"),
+    .min(1, "Informe seu WhatsApp")
+    .regex(phoneRegex, "WhatsApp inválido. Use o formato (XX) XXXXX-XXXX"),
   email: z
     .string()
-    .min(1, "Informe seu e-mail")
-    .email("E-mail inválido"),
-  cityState: z
-    .string()
-    .min(1, "Informe sua cidade e estado")
-    .min(3, "Cidade/Estado deve ter pelo menos 3 caracteres"),
-  propertyType: z.enum(PROPERTY_TYPES, {
-    errorMap: () => ({ message: "Selecione o tipo de imóvel" }),
-  }),
+    .trim()
+    .refine(
+      (value) => value === "" || z.string().email().safeParse(value).success,
+      "E-mail inválido"
+    )
+    .optional(),
+  cityState: z.string().trim().optional(),
+  propertyType: z.enum(PROPERTY_TYPES).optional(),
   averageBill: z
     .number({ invalid_type_error: "Informe o valor médio da conta de luz" })
     .min(50, "Valor mínimo de R$ 50,00")
@@ -64,8 +63,8 @@ export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 export const ALLOWED_EXTENSIONS = [".pdf", ".png", ".jpg", ".jpeg"];
 
 export function validateBillFile(file: File | null): string | null {
-  if (!file) {
-    return "Envie a conta de luz (PDF, PNG ou JPG)";
+  if (!file || file.size === 0) {
+    return null;
   }
 
   if (file.size > MAX_FILE_SIZE) {
@@ -91,21 +90,28 @@ export function parseQuoteFormData(formData: FormData) {
   const averageBill = digits ? parseInt(digits, 10) / 100 : NaN;
 
   const lgpdConsent = formData.get("lgpdConsent") === "true";
+  const propertyTypeRaw = formData.get("propertyType") as string;
 
   return quoteFormSchema.safeParse({
     fullName: formData.get("fullName"),
     phone: formData.get("phone"),
-    email: formData.get("email"),
-    cityState: formData.get("cityState"),
-    propertyType: formData.get("propertyType"),
+    email: (formData.get("email") as string) || undefined,
+    cityState: (formData.get("cityState") as string) || undefined,
+    propertyType:
+      propertyTypeRaw && PROPERTY_TYPES.includes(propertyTypeRaw as PropertyType)
+        ? propertyTypeRaw
+        : undefined,
     averageBill,
     lgpdConsent,
   });
 }
 
+import type { PreliminaryEstimate } from "@/lib/quote-estimate";
+
 export type QuoteSubmitState = {
   success: boolean;
   message: string;
+  estimate?: PreliminaryEstimate;
   fieldErrors?: Record<string, string[]>;
   fileError?: string;
 };

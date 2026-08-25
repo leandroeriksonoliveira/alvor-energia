@@ -19,21 +19,21 @@ const QuoteForm = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Orçamento Grátis",
+  title: "Orçamento Inteligente",
   description:
-    "Solicite seu orçamento de energia solar gratuito. Proposta personalizada em até 24h pela equipe técnica da Alvor Energia.",
+    "Solicite seu orçamento de energia solar gratuito. Informe nome, WhatsApp e valor da conta — proposta em até 24h pela Alvor Energia.",
   openGraph: {
-    title: "Orçamento Grátis | Alvor Energia",
+    title: "Orçamento Inteligente | Alvor Energia",
     description:
-      "Orçador Inteligente — receba sua proposta de energia solar personalizada em até 24 horas. Grátis e sem compromisso.",
+      "Orçamento Inteligente — receba sua proposta de energia solar personalizada em até 24 horas. Grátis e sem compromisso.",
     type: "website",
     locale: "pt_BR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Orçamento Grátis | Alvor Energia",
+    title: "Orçamento Inteligente | Alvor Energia",
     description:
-      "Orçador Inteligente — proposta personalizada em até 24h. Grátis!",
+      "Orçamento Inteligente — proposta personalizada em até 24h. Grátis!",
   },
 };
 
@@ -59,8 +59,8 @@ export default function OrcamentoPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          Seus dados estão protegidos e serão usados apenas para elaboração do
-          orçamento.
+          Os dados informados são preliminares. A proposta formal será elaborada
+          após análise técnica pela equipe Alvor.
         </p>
       </main>
     </div>

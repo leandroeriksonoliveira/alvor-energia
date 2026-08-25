@@ -11,7 +11,7 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://alvor-energia.vercel.app"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.alvorenergia.com.br"
   ),
   title: {
     default: "Alvor Soluções Energéticas | Energia Fotovoltaica",
