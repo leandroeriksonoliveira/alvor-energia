@@ -145,14 +145,25 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
         noValidate
       >
         {!compact && (
-          <div className="mb-2">
-            <h2 className="text-xl font-bold text-foreground md:text-2xl">
-              Orçamento Inteligente
+          <div className="mb-1 lg:hidden">
+            <h2 className="text-xl font-bold text-foreground">
+              Preencha seus dados
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Informe nome, WhatsApp e valor da conta. A prévia gerada é apenas
-              uma referência — a proposta formal depende de análise técnica pela
-              equipe Alvor. Seus dados serão enviados por e-mail e WhatsApp.
+              Campos com * são obrigatórios. A prévia aparece ao informar o
+              valor da conta.
+            </p>
+          </div>
+        )}
+
+        {!compact && (
+          <div className="mb-1 hidden lg:block">
+            <h2 className="text-xl font-bold text-foreground md:text-2xl">
+              Solicitar orçamento
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Campos com * são obrigatórios. Seus dados serão enviados por
+              e-mail e WhatsApp à equipe Alvor.
             </p>
           </div>
         )}
@@ -166,13 +177,14 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
           </div>
         )}
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
           <div className="space-y-2 sm:col-span-2">
             <Label htmlFor="fullName">Nome completo *</Label>
             <Input
               id="fullName"
               placeholder="Seu nome completo"
               autoComplete="name"
+              className="h-11"
               aria-invalid={!!errors.fullName || !!serverFieldError("fullName")}
               aria-describedby={
                 errors.fullName || serverFieldError("fullName")
@@ -197,6 +209,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
               inputMode="tel"
               placeholder="(00) 00000-0000"
               autoComplete="tel"
+              className="h-11"
               value={phoneValue || ""}
               aria-invalid={!!errors.phone || !!serverFieldError("phone")}
               aria-describedby={
@@ -223,6 +236,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
               name="averageBill"
               inputMode="numeric"
               placeholder="R$ 0,00"
+              className="h-11"
               value={
                 averageBillValue
                   ? maskCurrencyBR(String(Math.round(averageBillValue * 100)))
@@ -247,15 +261,16 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
                   serverFieldError("averageBill")}
               </p>
             )}
-            {averageBillValue && averageBillValue >= 50 && !errors.averageBill && (
+          </div>
+
+          {averageBillValue && averageBillValue >= 50 && !errors.averageBill && (
+            <div className="sm:col-span-2">
               <PreliminaryEstimateSummary
                 averageBill={averageBillValue}
                 propertyType={propertyType}
-                compact
-                className="mt-2"
               />
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="email">E-mail</Label>
@@ -265,6 +280,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
               inputMode="email"
               placeholder="seu@email.com (opcional)"
               autoComplete="email"
+              className="h-11"
               aria-invalid={!!errors.email || !!serverFieldError("email")}
               aria-describedby={
                 errors.email || serverFieldError("email")
@@ -286,6 +302,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
               id="cityState"
               placeholder="Ex: Belo Horizonte, MG (opcional)"
               autoComplete="address-level2"
+              className="h-11"
               aria-invalid={
                 !!errors.cityState || !!serverFieldError("cityState")
               }
@@ -399,7 +416,7 @@ export function QuoteForm({ className, compact = false }: QuoteFormProps) {
           else setShowSuccess(true);
         }}
       >
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+        <DialogContent className="max-h-[90vh] w-[calc(100%-1.5rem)] overflow-y-auto sm:max-w-xl">
           <DialogHeader>
             <DialogTitle className="text-emerald-700">
               Solicitação registrada
